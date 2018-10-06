@@ -17,7 +17,7 @@ function vide() {
 }
 
 function check() {
-	if ( $("#temp").val() < 9 | $("#temp").val() > 25) {
+	if ( $("#temp").val() < 7 | $("#temp").val() > 25) {
 		$("#resultat").html("<p>Valeur hors limites !</p>");
 		$("#temp").val("");
 	}
