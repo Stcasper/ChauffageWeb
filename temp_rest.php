@@ -6,7 +6,7 @@ class API extends REST
 	public $data = "";
 	const DB_SERVER = "localhost";
 	const DB_USER = "stcasper";
-	const DB_PASSWORD = "xxxxxxxx";
+	const DB_PASSWORD = "o1fdzc1a";
 	const DB = "stcasper";
 
 	private $db = NULL;
@@ -222,7 +222,7 @@ class API extends REST
 		{
 			$this->response('',406);
 		}
-		if($this->_request['temp_cons'] > 8 && $this->_request['temp_cons'] < 26)
+		if($this->_request['temp_cons'] > 6 && $this->_request['temp_cons'] < 26)
 		{
 			session_start();
 			if (isset($_SESSION['login']) && isset($_SESSION['pwd'])) 
