@@ -58,7 +58,7 @@ function tableau2(val,rad) {
 }
 $(document).ready(function(){
 	
-	tableau(50);
+	tableau(20);
   
     $("#submit").click(function(e){
         e.preventDefault();

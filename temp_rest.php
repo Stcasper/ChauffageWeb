@@ -165,7 +165,7 @@ class API extends REST
 		{
 			$this->response('',406);
 		}
-		$sql = mysql_query("SELECT * FROM Temp_releve ORDER BY Date desc", $this->db);
+		$sql = mysql_query("SELECT DATE_FORMAT(Temp_releve.Date, \"%d/%m/%Y à %H:%i\") as Date,Temp_releve.Temp_Ext,Temp_releve.Temperature, Temp_releve.Humidite, Temp_releve.Tp_Consigne, CONCAT(Radiateurs.Piece, ' (',Temp_releve.Radiateur, ')') as Piece, Temp_releve.Allume FROM Temp_releve, Radiateurs where Temp_releve.Radiateur = Radiateurs.Numero ORDER BY Temp_releve.Date desc", $this->db);
 		if(mysql_num_rows($sql) > 0)
 		{
 			$result = array();
@@ -179,14 +179,14 @@ class API extends REST
 		$this->response('',204); // If no records "No Content" status
 	}
 	
-	private function logs_last() //Renvoie les dernières mesures (50 max)
+	private function logs_last() //Renvoie les dernières mesures 
 	{ 
 		// Cross validation if the request method is GET else it will return "Not Acceptable" status
 		if($this->get_request_method() != "GET")
 		{
 			$this->response('',406);
 		}
-		$sql = mysql_query("SELECT * FROM Temp_releve ORDER BY Date desc", $this->db);
+		$sql = mysql_query("SELECT DATE_FORMAT(Temp_releve.Date, \"%d/%m/%Y à %H:%i\") as Date,Temp_releve.Temp_Ext,Temp_releve.Temperature, Temp_releve.Humidite, Temp_releve.Tp_Consigne, CONCAT(Radiateurs.Piece, ' (',Temp_releve.Radiateur, ')') as Piece, Temp_releve.Allume FROM Temp_releve, Radiateurs where Temp_releve.Radiateur = Radiateurs.Numero ORDER BY Temp_releve.Date desc", $this->db);
 		if(mysql_num_rows($sql) > 0)
 		{
 			$result = array();
@@ -204,14 +204,15 @@ class API extends REST
 		$this->response('',204); // If no records "No Content" status
 	}
 	
-	private function logs_last_rad() //Renvoie les dernières mesures (50 max)
+	private function logs_last_rad() //Renvoie les dernières mesures par radiateur
 	{ 
 		// Cross validation if the request method is GET else it will return "Not Acceptable" status
 		if($this->get_request_method() != "GET")
 		{
 			$this->response('',406);
 		}
-		$sql = mysql_query("SELECT * FROM Temp_releve where Radiateur = ".$this->_request['radiateur']." ORDER BY Date desc", $this->db);
+		
+		$sql = mysql_query("SELECT DATE_FORMAT(Temp_releve.Date, \"%d/%m/%Y à %H:%i\") as Date,Temp_releve.Temp_Ext,Temp_releve.Temperature, Temp_releve.Humidite, Temp_releve.Tp_Consigne, CONCAT(Radiateurs.Piece, ' (',Temp_releve.Radiateur, ')') as Piece, Temp_releve.Allume FROM Temp_releve, Radiateurs where Temp_releve.Radiateur = Radiateurs.Numero and Temp_releve.Radiateur = ".$this->_request['radiateur']." ORDER BY Temp_releve.Date desc", $this->db);
 		if(mysql_num_rows($sql) > 0)
 		{
 			$result = array();

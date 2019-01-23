@@ -54,8 +54,11 @@ function entete() {
 			var tbl_body = document.createElement("tbody");
 			$.each(data, function() {
 				$.each(this, function(k , v) {
+					if (k.toString() == "Piece"){
+						$("#val").append("dans "+v.toString()+"</H4>");
+					}
 					if (k.toString() == "Temperature"){
-						$("#val").append("<H4>Dernier relevé : "+v.toString()+"°C</H4>");
+						$("#val").append("<H4>Dernier relevé : "+v.toString()+"°C ");
 					}
 				})
 			})
