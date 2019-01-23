@@ -34,8 +34,8 @@
 
 <DIV id="div1" CLASS='class="w3-center w3-border"'>
 	<TABLE id="Tablelog" class="w3-table w3-striped w3-bordered">
-	<TR class="w3-theme"><TH CLASS='tableauth'><B>Date</B></TH><TH CLASS='tableauth'><B>T° Ext</B></TH>
-	<TH><B>T°int</B></TH><TH><B>%H</B></TH><TH><B>T°obj</B></TH><TH><B>Radiateur</B></TH><TH><B>Actif</B></TH></TR>
+	<thead><TR class="w3-theme"><TH CLASS='tableauth'><B>Date</B></TH><TH CLASS='tableauth'><B>T° Ext</B></TH>
+	<TH><B>T°int</B></TH><TH><B>%H</B></TH><TH><B>T°obj</B></TH><TH><B>Radiateur</B></TH><TH><B>Actif</B></TH></TR></thead>
 	</TABLE>
 </DIV>
 
@@ -44,6 +44,10 @@
 	  <div class="w3-section">   
 		<input class="w3-input" type="text" id="nbLignes">
 		<label>Nombre de lignes ?</label>
+	  </div>
+	  <div class="w3-section">   
+		<input class="w3-input" type="text" id="radiateur">
+		<label>Radiateur ?</label>
 	  </div>
 	  <div class="w3-section"> 
 		<input class="w3-btn w3-theme" type="submit" id="submit" value="Recharger">

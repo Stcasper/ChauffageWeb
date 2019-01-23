@@ -203,6 +203,31 @@ class API extends REST
 		}
 		$this->response('',204); // If no records "No Content" status
 	}
+	
+	private function logs_last_rad() //Renvoie les dernières mesures (50 max)
+	{ 
+		// Cross validation if the request method is GET else it will return "Not Acceptable" status
+		if($this->get_request_method() != "GET")
+		{
+			$this->response('',406);
+		}
+		$sql = mysql_query("SELECT * FROM Temp_releve where Radiateur = ".$this->_request['radiateur']." ORDER BY Date desc", $this->db);
+		if(mysql_num_rows($sql) > 0)
+		{
+			$result = array();
+			$line = 0;
+			$lineMax = $this->_request['cpt'];
+			//echo $lineMax;
+			while(($rlt = mysql_fetch_array($sql,MYSQL_ASSOC)) && $line<$lineMax)
+			{
+				$line++;
+				$result[] = $rlt;
+			}
+			// If success everything is good send header as "OK" and return list of users in JSON format
+			$this->response($this->json($result), 200);
+		}
+		$this->response('',204); // If no records "No Content" status
+	}
 
 	private function insert_temp()
 	{
