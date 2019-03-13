@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 require_once("Rest.inc.php");
 
 class API extends REST 
@@ -250,16 +251,11 @@ class API extends REST
 		}
 		if($this->_request['temp_cons'] > 6 && $this->_request['temp_cons'] < 26)
 		{
-			session_start();
-			if (isset($_SESSION['login']) && isset($_SESSION['pwd'])) 
-			{
-				$sql = "INSERT INTO `stcasper`.`Temp_consigne` (`Compteur`, `Date`, `Radiateur`, `Temperature`, `Demandeur`, `Date_Application`, `Heure_Application`) VALUES (NULL, NULL, '".$this->_request['radiateur']."', '".$this->_request['temp_cons']."', '".$this->_request['user']."', CURDATE(), CURTIME());";
-				echo $sql;
-				$result=mysql_query($sql, $this->db);
-				$success = array('status' => "Success", "msg" => "Successfully one record created.");
-				session_destroy();
-				$this->response($this->json($success),200);
-			}
+			$sql = "INSERT INTO `stcasper`.`Temp_consigne` (`Compteur`, `Date`, `Radiateur`, `Temperature`, `Demandeur`, `Date_Application`, `Heure_Application`) VALUES (NULL, NULL, '".$this->_request['radiateur']."', '".$this->_request['temp_cons']."', '".$this->_request['user']."', CURDATE(), CURTIME());";
+			echo $sql;
+			$result=mysql_query($sql, $this->db);
+			$success = array('status' => "Success", "msg" => "Successfully one record created.");
+			$this->response($this->json($success),200);
 		}
 		$this->response('',400); // Invalid inputs
 			
