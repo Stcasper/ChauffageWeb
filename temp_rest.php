@@ -287,6 +287,41 @@ class API extends REST
 		$this->response('',204); // If no records "No Content" status
 	}
 	
+	private function read_reboot()
+	{
+		// Cross validation if the request method is GET else it will return "Not Acceptable" status
+		if($this->get_request_method() != "GET")
+		{
+			$this->response('',406);
+		}
+		$radia = $this->_request['Radiateur'];
+		$sql = mysql_query("SELECT Reboot FROM Temp_consigne where Radiateur = ".$radia." ORDER BY Compteur desc", $this->db);
+		//echo $sql;
+		if(mysql_num_rows($sql) > 0)
+		{
+			$result = array();
+			$line = 0;
+			$rlt = mysql_fetch_array($sql,MYSQL_ASSOC);
+			$result[] = $rlt;
+			// If success everything is good send header as "OK" and return list of users in JSON format
+			$this->response($this->json($result), 200);
+		}
+		$this->response('',204); // If no records "No Content" status
+	}
+	
+	private function write_reboot()
+	{
+		if($this->get_request_method() != "POST")
+		{
+			$this->response('',406);
+		}
+		$radia = $this->_request['Radiateur'];
+		$sql = "UPDATE Temp_consigne SET Reboot = 0 WHERE Radiateur = ".$radia." and Reboot = 1";
+		$result=mysql_query($sql, $this->db);
+		$success = array('status' => "Success", "msg" => "Successfully one record created.");
+		$this->response($this->json($success),200);
+	}
+	
 	private function logs_consigne()
 	{
 		// Cross validation if the request method is GET else it will return "Not Acceptable" status
