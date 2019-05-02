@@ -229,6 +229,34 @@ class API extends REST
 		}
 		$this->response('',204); // If no records "No Content" status
 	}
+	
+	
+	private function logs_ext_meudon() //Renvoie les dernières mesures par radiateur
+	{ 
+		// Cross validation if the request method is GET else it will return "Not Acceptable" status
+		if($this->get_request_method() != "GET")
+		{
+			$this->response('',406);
+		}
+		
+		//$sql = mysql_query("SELECT DATE_FORMAT(Temp_releve.Date, \"%d/%m/%Y à %H:%i\") as Date,Temp_releve.Temp_Ext where Temp_releve.Radiateur = Radiateurs.Numero and Temp_releve.Radiateur = ".$this->_request['radiateur']." ORDER BY Temp_releve.Date desc", $this->db);
+		$sql = mysql_query("SELECT DATE_FORMAT(Temp_releve.Date, \"%H:%i\") as Date,Temp_releve.Temp_Ext FROM Temp_releve, Radiateurs where Temp_releve.Radiateur = Radiateurs.Numero and Temp_releve.Radiateur = ".$this->_request['radiateur']." ORDER BY Temp_releve.Date desc", $this->db);
+		if(mysql_num_rows($sql) > 0)
+		{
+			$result = array();
+			$line = 0;
+			$lineMax = $this->_request['cpt'];
+			//echo $lineMax;
+			while(($rlt = mysql_fetch_array($sql,MYSQL_ASSOC)) && $line<$lineMax)
+			{
+				$line++;
+				$result[] = $rlt;
+			}
+			// If success everything is good send header as "OK" and return list of users in JSON format
+			$this->response($this->json($result), 200);
+		}
+		$this->response('',204); // If no records "No Content" status
+	}
 
 	private function insert_temp()
 	{
