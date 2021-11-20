@@ -270,18 +270,6 @@ class API extends REST
 		$this->response($this->json($success),200);
 	}
 	
-	private function insert_temp_minute()
-	{
-		if($this->get_request_method() != "POST")
-		{
-			$this->response('',406);
-		}
-		$sql = "INSERT INTO `stcasper`.`Temp_".$this->_request['rad']."` (`Date`, `Temperature`, `Tp_Consigne`, `Allume`) VALUES (CURRENT_TIMESTAMP, '".$this->_request['temp']."', '".$this->_request['Consigne']."', '".$this->_request['Allume']."');";
-		$result=mysql_query($sql, $this->db);
-		$success = array('status' => "Success", "msg" => "Successfully one record created.");
-		$this->response($this->json($success),200);
-	}
-	
 	private function insert_consigne()
 	{
 		if($this->get_request_method() != "POST")
